@@ -12,7 +12,7 @@ namespace ECommerce.API.Controllers
     [Route("api/[controller]")]
     public class BasketController : Controller
     {
-        private IUserActor GetActor(string userId)
+        private IUserActor GetUserActor(string userId)
         {
             return ActorProxy.Create<IUserActor>(new ActorId(userId), new Uri("fabric:/ECommerce/UserActorService"));
         }
@@ -20,9 +20,9 @@ namespace ECommerce.API.Controllers
         [HttpGet("{userId}")]
         public async Task<ApiBasket> GetBasketAsync(string userId)
         {
-            var actor = GetActor(userId);
+            var userActor = GetUserActor(userId);
 
-            var products = await actor.GetBasketAsync();
+            var products = await userActor.GetBasketAsync();
 
             return new ApiBasket
             {
@@ -34,17 +34,17 @@ namespace ECommerce.API.Controllers
         [HttpPost("{userId}")]
         public Task AddToBasketAsync(string userId, [FromBody] ApiBasketAddRequest request)
         {
-            var actor = GetActor(userId);
+            var userActor = GetUserActor(userId);
 
-            return actor.AddToBasketAsync(request.ProductId, request.Quantity);
+            return userActor.AddToBasketAsync(request.ProductId, request.Quantity);
         }
 
         [HttpDelete("{userId}")]
         public Task ClearBasketAsync(string userId)
         {
-            var actor = GetActor(userId);
+            var userActor = GetUserActor(userId);
 
-            return actor.ClearBasketAsync();
+            return userActor.ClearBasketAsync();
         }
     }
 }

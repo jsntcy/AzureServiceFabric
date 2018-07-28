@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Services.Remoting;
 
@@ -8,5 +9,6 @@ namespace ECommerce.ProductCatalog.Model
     {
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task AddProductAsync(Product product);
+        Task<Product> GetProductAsync(Guid productId);
     }
 }

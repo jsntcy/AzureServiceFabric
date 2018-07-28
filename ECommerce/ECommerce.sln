@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserActor", "UserActor\User
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserActor.Interfaces", "UserActor.Interfaces\UserActor.Interfaces.csproj", "{E7612062-C192-45E9-B844-15B68128881E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.CheckoutService.Model", "ECommerce.CheckoutService.Model\ECommerce.CheckoutService.Model.csproj", "{C38ED547-816D-4D38-B882-EBC8C9C38DEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.CheckoutService", "ECommerce.CheckoutService\ECommerce.CheckoutService.csproj", "{DFFBA6D8-BE68-4AC5-9CA3-668522D99A23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,20 @@ Global
 		{E7612062-C192-45E9-B844-15B68128881E}.Release|Any CPU.ActiveCfg = Release|x64
 		{E7612062-C192-45E9-B844-15B68128881E}.Release|x64.ActiveCfg = Release|x64
 		{E7612062-C192-45E9-B844-15B68128881E}.Release|x64.Build.0 = Release|x64
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Debug|x64.Build.0 = Debug|Any CPU
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Release|x64.ActiveCfg = Release|Any CPU
+		{C38ED547-816D-4D38-B882-EBC8C9C38DEB}.Release|x64.Build.0 = Release|Any CPU
+		{DFFBA6D8-BE68-4AC5-9CA3-668522D99A23}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{DFFBA6D8-BE68-4AC5-9CA3-668522D99A23}.Debug|x64.ActiveCfg = Debug|x64
+		{DFFBA6D8-BE68-4AC5-9CA3-668522D99A23}.Debug|x64.Build.0 = Debug|x64
+		{DFFBA6D8-BE68-4AC5-9CA3-668522D99A23}.Release|Any CPU.ActiveCfg = Release|x64
+		{DFFBA6D8-BE68-4AC5-9CA3-668522D99A23}.Release|x64.ActiveCfg = Release|x64
+		{DFFBA6D8-BE68-4AC5-9CA3-668522D99A23}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
