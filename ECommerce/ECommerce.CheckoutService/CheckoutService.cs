@@ -50,11 +50,11 @@ namespace ECommerce.CheckoutService
                 checkoutSummary.Products.Add(checkoutProduct);
             }
 
-            checkoutSummary.TotalPrice = checkoutSummary.Products.Sum(p => p.Price);
+            checkoutSummary.TotalPrice = checkoutSummary.Products.Sum(p => p.Price * p.Quantity);
 
             await userActor.ClearBasketAsync();
 
-            await AddToHistory(checkoutSummary);
+            await AddToHistory(userId, checkoutSummary);
 
             return checkoutSummary;
         }
@@ -62,22 +62,25 @@ namespace ECommerce.CheckoutService
         public async Task<IEnumerable<CheckoutSummary>> GetOrderHitoryAsync(string userId)
         {
             var result = new List<CheckoutSummary>();
-            var history = await StateManager.GetOrAddAsync<IReliableDictionary<DateTime, CheckoutSummary>>("history");
+            var history = await StateManager.GetOrAddAsync<IReliableDictionary<string, List<CheckoutSummary>>>("history");
 
             using (var tx = StateManager.CreateTransaction())
             {
-                var allProducts = await history.CreateEnumerableAsync(tx, EnumerationMode.Unordered);
-                using (var enumerator = allProducts.GetAsyncEnumerator())
-                {
-                    while (await enumerator.MoveNextAsync(CancellationToken.None))
-                    {
-                        var current = enumerator.Current;
-                        result.Add(current.Value);
-                    }
-                }
+                var orders = await history.TryGetValueAsync(tx, userId);
+
+                return orders.HasValue ? orders.Value : result;
+                //var allProducts = await history.CreateEnumerableAsync(tx, EnumerationMode.Unordered);
+                //using (var enumerator = allProducts.GetAsyncEnumerator())
+                //{
+                //    while (await enumerator.MoveNextAsync(CancellationToken.None))
+                //    {
+                //        var current = enumerator.Current;
+                //        result.Add(current.Value);
+                //    }
+                //}
             }
 
-            return result;
+            //return result;
         }
 
         /// <summary>
@@ -95,13 +98,17 @@ namespace ECommerce.CheckoutService
             };
         }
 
-        private async Task AddToHistory(CheckoutSummary checkoutSummary)
+        private async Task AddToHistory(string userId, CheckoutSummary checkoutSummary)
         {
-            var history = await StateManager.GetOrAddAsync<IReliableDictionary<DateTime, CheckoutSummary>>("history");
+            var history = await StateManager.GetOrAddAsync<IReliableDictionary<string, List<CheckoutSummary>>>("history");
 
             using (var tx = StateManager.CreateTransaction())
             {
-                await history.AddAsync(tx, checkoutSummary.Date, checkoutSummary);
+                await history.AddOrUpdateAsync(
+                    tx,
+                    userId,
+                    (id) => { var orders = new List<CheckoutSummary>(); orders.Add(checkoutSummary); return orders; },
+                    (id, oldOrders) => { oldOrders.Add(checkoutSummary); return oldOrders; });
 
                 await tx.CommitAsync();
             }
